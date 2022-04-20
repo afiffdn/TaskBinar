@@ -2,7 +2,6 @@ package com.example.taskbinar
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -11,9 +10,9 @@ import kotlinx.coroutines.flow.map
 import java.util.prefs.Preferences
 
 
-val Context.dataStore:DataStore<Preferences> by preferencesDataStore(name = "settings")
+val Context.dataStore:DataStore<androidx.datastore.preferences.core.Preferences> by preferencesDataStore(name = "settings")
 
-class SessionPreference private constructor(private val dataStore: DataStore<Preferences>){
+class SessionPreference private constructor(private val dataStore: DataStore<androidx.datastore.preferences.core.Preferences>){
     fun getUserSession(): Flow<UserSession> = dataStore.data.map { pref ->
         UserSession(
             username = pref[USERNAME_KEY] ?: "",
@@ -46,7 +45,7 @@ class SessionPreference private constructor(private val dataStore: DataStore<Pre
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
 
-        fun getInstance(dataStore: DataStore<Preferences>): SessionPreference {
+        fun getInstance(dataStore: DataStore<androidx.datastore.preferences.core.Preferences>): SessionPreference {
             return INSTANCE ?: synchronized(this) {
                 val instance = SessionPreference(dataStore)
                 INSTANCE = instance
