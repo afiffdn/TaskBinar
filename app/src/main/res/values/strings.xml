@@ -6,4 +6,10 @@
     <string name="masukkan_email">Masukkan email</string>
     <string name="masukkan_password">masukkan password</string>
     <string name="register">register</string>
+    <string name="username">Username</string>
+    <string name="picture">Picture</string>
+    <string name="gallery_chooser_title">Select Picture</string>
+    <string name="update">Update</string>
+    <string name="logout">Logout</string>
+    <string name="image_from_update">Image from update</string>
 </resources>

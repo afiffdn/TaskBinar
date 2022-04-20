@@ -1,0 +1,34 @@
+package com.example.taskbinar.api
+
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
+
+object ApiClient {
+    private const val BASE_URL = "https://binar-gdd-cc8.herokuapp.com/api/v1/"
+
+    fun getApiService(): ApiService {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+
+        val retrofit = retrofit {
+            baseUrl(BASE_URL)
+            addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            addConverterFactory(GsonConverterFactory.create())
+            client(client)
+        }
+
+        return retrofit.create()
+    }
+
+    private inline fun retrofit(builder: Retrofit.Builder.() -> Unit): Retrofit {
+        return Retrofit.Builder()
+            .apply { builder() }
+            .build()
+    }
+}
